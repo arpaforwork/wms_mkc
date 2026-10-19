@@ -1,0 +1,6 @@
+{
+  "name": "WMS MKC - ระบบจัดการคลังวัสดุก่อสร้าง",
+  "description": "ระบบบริหารและจัดการคลังสินค้าวัสดุก่อสร้างแบบเรียลไทม์ ตรวจสอบสต็อก รับเข้า-เบิกจ่าย พร้อมแดชบอร์ดสรุปผลและลงชื่อเข้าใช้ด้วย Gmail",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

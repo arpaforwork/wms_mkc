@@ -1,0 +1,219 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Construction material inventory item",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string",
+          "description": "Unique Stock Keeping Unit code"
+        },
+        "name": {
+          "type": "string",
+          "description": "Material or product name in Thai"
+        },
+        "category": {
+          "type": "string",
+          "description": "Material category"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Inventory unit"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Current on-hand quantity"
+        },
+        "minStock": {
+          "type": "number",
+          "description": "Safety stock threshold for low-stock warning"
+        },
+        "costPrice": {
+          "type": "number",
+          "description": "Cost price in THB"
+        },
+        "sellingPrice": {
+          "type": "number",
+          "description": "Selling price in THB"
+        },
+        "warehouseZone": {
+          "type": "string",
+          "description": "Storage warehouse zone"
+        },
+        "supplier": {
+          "type": "string",
+          "description": "Supplier or manufacturer name"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update ISO timestamp"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation ISO timestamp"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "User identifier who created the item"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Internal notes or specifications"
+        }
+      },
+      "required": ["sku", "name", "category", "unit", "quantity", "minStock", "warehouseZone"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Stock movement record: Inbound, Outbound, Adjust, Transfer",
+      "type": "object",
+      "properties": {
+        "docNo": {
+          "type": "string",
+          "description": "Document reference number"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["IN", "OUT", "ADJUST", "TRANSFER"],
+          "description": "Transaction movement type"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Associated product ID"
+        },
+        "productSku": {
+          "type": "string",
+          "description": "Product SKU"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Product title"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity moved"
+        },
+        "previousQuantity": {
+          "type": "number",
+          "description": "Quantity before transaction"
+        },
+        "newQuantity": {
+          "type": "number",
+          "description": "Quantity after transaction"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Material unit"
+        },
+        "zone": {
+          "type": "string",
+          "description": "Source or primary warehouse zone"
+        },
+        "destinationZone": {
+          "type": "string",
+          "description": "Destination zone for transfers"
+        },
+        "reference": {
+          "type": "string",
+          "description": "Invoice, PO, SO, or project reference"
+        },
+        "actorEmail": {
+          "type": "string",
+          "description": "Email of user performing operation"
+        },
+        "actorName": {
+          "type": "string",
+          "description": "Display name of user"
+        },
+        "actorUid": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Movement timestamp"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional notes"
+        }
+      },
+      "required": ["docNo", "type", "productId", "quantity", "actorEmail", "timestamp"]
+    },
+    "Warehouse": {
+      "title": "Warehouse",
+      "description": "Warehouse zone definition",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Zone name"
+        },
+        "code": {
+          "type": "string",
+          "description": "Short code e.g. WH-A"
+        },
+        "description": {
+          "type": "string",
+          "description": "Zone details"
+        },
+        "capacityPercent": {
+          "type": "number",
+          "description": "Current capacity utilization percentage"
+        }
+      },
+      "required": ["name", "code"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user information",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User Gmail address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Profile picture URL"
+        },
+        "role": {
+          "type": "string",
+          "description": "User access role"
+        },
+        "lastLogin": {
+          "type": "string",
+          "description": "Last sign in timestamp"
+        }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of all inventory materials"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Immutable log of stock movements"
+    },
+    "/warehouses/{warehouseId}": {
+      "schema": "Warehouse",
+      "description": "List of warehouse storage zones"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Registered app users"
+    }
+  }
+}
